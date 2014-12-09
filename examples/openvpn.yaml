@@ -1,0 +1,12 @@
+---
+openvpn::config_file_template: 'openvpn/common/etc/openvpn/openvpn.conf.erb',
+openvpn::config_file_hash:
+  'openvpn':
+    config_file_path:     '/etc/default/openvpn',
+    config_file_template: 'openvpn/common/etc/default/openvpn.erb',
+openvpn::key_country: 'DE',
+openvpn::key_province: 'NRW',
+openvpn::key_city: 'Muenster',
+openvpn::server_subnet: '192.168.57.0 255.255.255.0',
+openvpn::clients_hash:
+  'dhoppe':
