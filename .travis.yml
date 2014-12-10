@@ -9,7 +9,7 @@ after_success:
 env:
   global:
   - PUBLISHER_LOGIN=dhoppe
-  - secure: i"NQsAixbTvhh9RYdrL0qs3rvZM70bSSLfmt1cvJ18BTJ3yJCvIbfGbUTCtlIr9CKRjJkeoNxXEZbHuTl9WkdYSIcZ+Lu5VCzu92BgNzlYNX4qlqZOPo9nXv+TtXpOUZ0RzPeWVTH9e2rRbSv7lGPyHESN36muDQRc//ZWi8gi7mc="
+  - secure: "NQsAixbTvhh9RYdrL0qs3rvZM70bSSLfmt1cvJ18BTJ3yJCvIbfGbUTCtlIr9CKRjJkeoNxXEZbHuTl9WkdYSIcZ+Lu5VCzu92BgNzlYNX4qlqZOPo9nXv+TtXpOUZ0RzPeWVTH9e2rRbSv7lGPyHESN36muDQRc//ZWi8gi7mc="
 matrix:
   fast_finish: true
   include:

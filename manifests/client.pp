@@ -14,7 +14,7 @@ define openvpn::client (
   exec { "${name}.ovpn":
     path    => '/usr/bin:/usr/sbin/:/bin:/sbin',
     cwd     => "${::openvpn::config_dir_path}/download",
-    command => "cat ${name}/${name}.conf | perl -lne 'if(m|^ca keys/ca.crt|){ chomp(\$ca=`cat ${name}/keys/ca.crt`); print \"<ca>\n\$ca\n</ca>\"} elsif(m|^cert keys/${name}.crt|) { chomp(\$crt=`cat ${name}/keys/${name}.crt`); print \"<cert>\n\$crt\n</cert>\"} elsif(m|^key keys/${name}.key|){ chomp(\$key=`cat ${name}/keys/${name}.key`); print \"<key>\n\$key\n</key>\"} else { print} ' > ${name}.ovpn",
+    command => "rm ${name}.ovpn; cat ${name}/${name}.conf | perl -lne 'if(m|^ca keys/ca.crt|){ chomp(\$ca=`cat ${name}/keys/ca.crt`); print \"<ca>\n\$ca\n</ca>\"} elsif(m|^cert keys/${name}.crt|) { chomp(\$crt=`cat ${name}/keys/${name}.crt`); print \"<cert>\n\$crt\n</cert>\"} elsif(m|^key keys/${name}.key|){ chomp(\$key=`cat ${name}/keys/${name}.key`); print \"<key>\n\$key\n</key>\"} else { print} ' > ${name}.ovpn",
     creates => "${::openvpn::config_dir_path}/download/${name}.ovpn",
     require => [
       File["${name}_ca.crt"],
@@ -27,7 +27,7 @@ define openvpn::client (
   exec { "${name}.tar.gz":
     path    => '/usr/bin:/usr/sbin/:/bin:/sbin',
     cwd     => "${::openvpn::config_dir_path}/download",
-    command => "tar cvfzh ${name}.tar.gz ${name}",
+    command => "rm ${name}.tar.gz; tar cvfzh ${name}.tar.gz ${name}",
     creates => "${::openvpn::config_dir_path}/download/${name}.tar.gz",
     require => [
       File["${name}_ca.crt"],
