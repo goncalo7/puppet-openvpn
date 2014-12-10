@@ -3,8 +3,8 @@ require 'spec_helper'
 describe 'openvpn::define', :type => :define do
   ['Debian'].each do |osfamily|
     let(:facts) {{
-      :osfamily  => osfamily,
-      :ipaddress => '10.0.2.15',
+      :osfamily          => osfamily,
+      :ipaddress_primary => '10.0.2.15',
     }}
     let(:pre_condition) { 'include openvpn' }
     let(:title) { 'openvpn.conf' }

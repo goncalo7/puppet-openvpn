@@ -27,7 +27,7 @@
 
 # Which local IP address should OpenVPN
 # listen on? (optional)
-local <%= scope.lookupvar('::ipaddress') %>
+local <%= scope.lookupvar('::ipaddress_primary') %>
 
 # Which TCP/UDP port should OpenVPN listen on?
 # If you want to run multiple OpenVPN instances
