@@ -1,3 +1,7 @@
+## 2014-12-10 Release 0.1.2
+### Summary:
+- [Puppet] Change fact for ipaddress
+
 ## 2014-12-10 Release 0.1.1
 ### Summary:
 - [Puppet] Add a custom fact because the value of ipaddress gets messed up if you use Docker
