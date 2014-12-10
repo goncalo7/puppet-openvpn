@@ -1,3 +1,9 @@
+## 2014-12-10 Release 0.1.3
+### Summary:
+- [Puppet] Fix rebuilding *.tar.gz and *.ovpn
+- [Puppet] Add support for pushing parameters like route etc.
+- [Puppet] Fix default parameters and syntax of the .yaml file
+
 ## 2014-12-10 Release 0.1.2
 ### Summary:
 - [Puppet] Change fact for ipaddress

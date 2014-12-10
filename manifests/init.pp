@@ -50,6 +50,7 @@ class openvpn (
   $server_proto             = 'udp',
   $server_dev               = 'tun',
   $server_subnet            = undef,
+  $server_push              = undef,
   $server_compression       = true,
   $server_user              = true,
   $server_group             = true,

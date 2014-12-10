@@ -61,9 +61,6 @@ Install openvpn with the recommended parameters.
       key_province         => 'NRW',
       key_city             => 'Muenster',
       server_subnet        => '192.168.57.0 255.255.255.0',
-      clients_hash         => {
-        'dhoppe'   => {},
-      },
     }
 ```
 
@@ -341,6 +338,10 @@ Determines which virtual network device should be used. Defaults to 'tun'.
 #### `server_subnet`
 
 Determines the network to assign client addresses out of. Defaults to 'undef'.
+
+#### `server_push`
+
+Determines options to push out to the client. For example routes, DNS servers, DNS search domains and many more. Defaults to 'undef'.
 
 #### `server_compression`
 
