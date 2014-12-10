@@ -342,6 +342,10 @@ Determines which virtual network device should be used. Defaults to 'tun'.
 
 Determines the network to assign client addresses out of. Defaults to 'undef'.
 
+#### `server_push`
+
+Determines options to push out to the client. For example routes, DNS servers, DNS search domains and many more. Defaults to 'undef'.
+
 #### `server_compression`
 
 Determines if compression should be enabled. Defaults to 'true'.
