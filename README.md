@@ -61,9 +61,6 @@ Install openvpn with the recommended parameters.
       key_province         => 'NRW',
       key_city             => 'Muenster',
       server_subnet        => '192.168.57.0 255.255.255.0',
-      clients_hash         => {
-        'dhoppe'   => {},
-      },
     }
 ```
 
