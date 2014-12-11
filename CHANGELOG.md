@@ -1,3 +1,7 @@
+## 2014-12-11 Release 0.1.4
+### Summary:
+- [Puppet] Add missing quotes
+
 ## 2014-12-10 Release 0.1.3
 ### Summary:
 - [Puppet] Fix rebuilding *.tar.gz and *.ovpn
