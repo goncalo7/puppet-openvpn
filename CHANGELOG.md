@@ -1,3 +1,8 @@
+## 2015-02-25 Release 0.1.5
+### Summary:
+- [Beaker] Update Beaker environment
+- [Puppet] Add support for Debian 8.x (Jessie)
+
 ## 2014-12-11 Release 0.1.4
 ### Summary:
 - [Puppet] Add missing quotes

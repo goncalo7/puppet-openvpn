@@ -369,7 +369,7 @@ Determines if duplicate packet warnings should be silenced. Valid values are 'tr
 
 This module has been tested on:
 
-* Debian 6/7
+* Debian 6/7/8
 * Ubuntu 12.04/14.04
 
 ## Development
