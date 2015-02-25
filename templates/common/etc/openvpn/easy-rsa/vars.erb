@@ -90,7 +90,7 @@ export KEY_OU="<%= scope.lookupvar('::openvpn::key_ou') %>"
 <% end -%>
 # export PKCS11_MODULE_PATH=changeme
 # export PKCS11_PIN=1234
-<% elsif @lsbdistcodename == 'trusty' -%>
+<% elsif @lsbdistcodename =~ /(jessie|trusty)/ -%>
 <% if scope.lookupvar('::openvpn::key_ou') != '' -%>
 export KEY_OU="<%= scope.lookupvar('::openvpn::key_ou') %>"
 <% else -%>

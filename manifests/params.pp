@@ -7,6 +7,7 @@ class openvpn::params {
 
   $package_list = $::osfamily ? {
     'Debian' => getvar('::lsbdistcodename') ? {
+      'jessie' => ['easy-rsa'],
       'trusty' => ['easy-rsa'],
       default  => undef,
     },
@@ -46,6 +47,7 @@ class openvpn::params {
 
   $easy_rsa_source = $::osfamily ? {
     'Debian' => getvar('::lsbdistcodename') ? {
+      'jessie' => '/usr/share/easy-rsa',
       'trusty' => '/usr/share/easy-rsa',
       default  => '/usr/share/doc/openvpn/examples/easy-rsa/2.0',
     }
