@@ -12,6 +12,7 @@ describe 'openvpn::define', :type => :define do
     context "on #{osfamily}" do
       context 'when source file' do
         let(:params) {{
+          :config_file_path   => '/etc/openvpn/openvpn.2nd.conf',
           :config_file_source => 'puppet:///modules/openvpn/common/etc/openvpn/openvpn.conf',
         }}
 
@@ -27,6 +28,7 @@ describe 'openvpn::define', :type => :define do
 
       context 'when content string' do
         let(:params) {{
+          :config_file_path   => '/etc/openvpn/openvpn.3rd.conf',
           :config_file_string => '# THIS FILE IS MANAGED BY PUPPET',
         }}
 
@@ -42,6 +44,7 @@ describe 'openvpn::define', :type => :define do
 
       context 'when content template' do
         let(:params) {{
+          :config_file_path     => '/etc/openvpn/openvpn.4th.conf',
           :config_file_template => 'openvpn/common/etc/openvpn/openvpn.conf.erb',
         }}
 
@@ -57,6 +60,7 @@ describe 'openvpn::define', :type => :define do
 
       context 'when content template (custom)' do
         let(:params) {{
+          :config_file_path         => '/etc/openvpn/openvpn.5th.conf',
           :config_file_template     => 'openvpn/common/etc/openvpn/openvpn.conf.erb',
           :config_file_options_hash => {
             'key' => 'value',
