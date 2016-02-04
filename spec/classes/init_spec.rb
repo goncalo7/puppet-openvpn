@@ -19,9 +19,9 @@ describe 'openvpn', :type => :class do
       describe 'openvpn::install' do
         context 'defaults' do
           it do
-            is_expected.to contain_package('openvpn').with({
+            is_expected.to contain_package('openvpn').with(
               'ensure' => 'present',
-            })
+            )
           end
         end
 
@@ -31,9 +31,9 @@ describe 'openvpn', :type => :class do
           }}
 
           it do
-            is_expected.to contain_package('openvpn').with({
+            is_expected.to contain_package('openvpn').with(
               'ensure' => 'latest',
-            })
+            )
           end
         end
 
@@ -45,22 +45,22 @@ describe 'openvpn', :type => :class do
           }}
 
           it do
-            is_expected.to contain_package('openvpn').with({
+            is_expected.to contain_package('openvpn').with(
               'ensure' => 'absent',
-            })
+            )
           end
           it do
-            is_expected.to contain_file('openvpn.conf').with({
+            is_expected.to contain_file('openvpn.conf').with(
               'ensure'  => 'present',
               'notify'  => 'Service[openvpn]',
               'require' => 'Package[openvpn]',
-            })
+            )
           end
           it do
-            is_expected.to contain_service('openvpn').with({
+            is_expected.to contain_service('openvpn').with(
               'ensure' => 'stopped',
               'enable' => false,
-            })
+            )
           end
         end
 
@@ -72,22 +72,22 @@ describe 'openvpn', :type => :class do
           }}
 
           it do
-            is_expected.to contain_package('openvpn').with({
+            is_expected.to contain_package('openvpn').with(
               'ensure' => 'purged',
-            })
+            )
           end
           it do
-            is_expected.to contain_file('openvpn.conf').with({
+            is_expected.to contain_file('openvpn.conf').with(
               'ensure'  => 'absent',
               'notify'  => 'Service[openvpn]',
               'require' => 'Package[openvpn]',
-            })
+            )
           end
           it do
-            is_expected.to contain_service('openvpn').with({
+            is_expected.to contain_service('openvpn').with(
               'ensure' => 'stopped',
               'enable' => false,
-            })
+            )
           end
         end
       end
@@ -95,11 +95,11 @@ describe 'openvpn', :type => :class do
       describe 'openvpn::config' do
         context 'defaults' do
           it do
-            is_expected.to contain_file('openvpn.conf').with({
+            is_expected.to contain_file('openvpn.conf').with(
               'ensure'  => 'present',
               'notify'  => 'Service[openvpn]',
               'require' => 'Package[openvpn]',
-            })
+            )
           end
         end
 
@@ -109,7 +109,7 @@ describe 'openvpn', :type => :class do
           }}
 
           it do
-            is_expected.to contain_file('openvpn.dir').with({
+            is_expected.to contain_file('openvpn.dir').with(
               'ensure'  => 'directory',
               'force'   => false,
               'purge'   => false,
@@ -117,7 +117,7 @@ describe 'openvpn', :type => :class do
               'source'  => 'puppet:///modules/openvpn/common/etc/openvpn',
               'notify'  => 'Service[openvpn]',
               'require' => 'Package[openvpn]',
-            })
+            )
           end
         end
 
@@ -128,7 +128,7 @@ describe 'openvpn', :type => :class do
           }}
 
           it do
-            is_expected.to contain_file('openvpn.dir').with({
+            is_expected.to contain_file('openvpn.dir').with(
               'ensure'  => 'directory',
               'force'   => true,
               'purge'   => true,
@@ -136,7 +136,7 @@ describe 'openvpn', :type => :class do
               'source'  => 'puppet:///modules/openvpn/common/etc/openvpn',
               'notify'  => 'Service[openvpn]',
               'require' => 'Package[openvpn]',
-            })
+            )
           end
         end
 
@@ -146,12 +146,12 @@ describe 'openvpn', :type => :class do
           }}
 
           it do
-            is_expected.to contain_file('openvpn.conf').with({
+            is_expected.to contain_file('openvpn.conf').with(
               'ensure'  => 'present',
               'source'  => 'puppet:///modules/openvpn/common/etc/openvpn/openvpn.conf',
               'notify'  => 'Service[openvpn]',
               'require' => 'Package[openvpn]',
-            })
+            )
           end
         end
 
@@ -161,12 +161,12 @@ describe 'openvpn', :type => :class do
           }}
 
           it do
-            is_expected.to contain_file('openvpn.conf').with({
+            is_expected.to contain_file('openvpn.conf').with(
               'ensure'  => 'present',
               'content' => /THIS FILE IS MANAGED BY PUPPET/,
               'notify'  => 'Service[openvpn]',
               'require' => 'Package[openvpn]',
-            })
+            )
           end
         end
 
@@ -176,12 +176,12 @@ describe 'openvpn', :type => :class do
           }}
 
           it do
-            is_expected.to contain_file('openvpn.conf').with({
+            is_expected.to contain_file('openvpn.conf').with(
               'ensure'  => 'present',
               'content' => /THIS FILE IS MANAGED BY PUPPET/,
               'notify'  => 'Service[openvpn]',
               'require' => 'Package[openvpn]',
-            })
+            )
           end
         end
 
@@ -194,12 +194,12 @@ describe 'openvpn', :type => :class do
           }}
 
           it do
-            is_expected.to contain_file('openvpn.conf').with({
+            is_expected.to contain_file('openvpn.conf').with(
               'ensure'  => 'present',
               'content' => /THIS FILE IS MANAGED BY PUPPET/,
               'notify'  => 'Service[openvpn]',
               'require' => 'Package[openvpn]',
-            })
+            )
           end
         end
       end
@@ -207,10 +207,10 @@ describe 'openvpn', :type => :class do
       describe 'openvpn::service' do
         context 'defaults' do
           it do
-            is_expected.to contain_service('openvpn').with({
+            is_expected.to contain_service('openvpn').with(
               'ensure' => 'running',
               'enable' => true,
-            })
+            )
           end
         end
 
@@ -220,10 +220,10 @@ describe 'openvpn', :type => :class do
           }}
 
           it do
-            is_expected.to contain_service('openvpn').with({
+            is_expected.to contain_service('openvpn').with(
               'ensure' => 'stopped',
               'enable' => true,
-            })
+            )
           end
         end
       end

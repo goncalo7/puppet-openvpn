@@ -17,12 +17,12 @@ describe 'openvpn::define', :type => :define do
         }}
 
         it do
-          is_expected.to contain_file('define_openvpn.conf').with({
+          is_expected.to contain_file('define_openvpn.conf').with(
             'ensure'  => 'present',
             'source'  => 'puppet:///modules/openvpn/common/etc/openvpn/openvpn.conf',
             'notify'  => 'Service[openvpn]',
             'require' => 'Package[openvpn]',
-          })
+          )
         end
       end
 
@@ -33,12 +33,12 @@ describe 'openvpn::define', :type => :define do
         }}
 
         it do
-          is_expected.to contain_file('define_openvpn.conf').with({
+          is_expected.to contain_file('define_openvpn.conf').with(
             'ensure'  => 'present',
             'content' => /THIS FILE IS MANAGED BY PUPPET/,
             'notify'  => 'Service[openvpn]',
             'require' => 'Package[openvpn]',
-          })
+          )
         end
       end
 
@@ -49,12 +49,12 @@ describe 'openvpn::define', :type => :define do
         }}
 
         it do
-          is_expected.to contain_file('define_openvpn.conf').with({
+          is_expected.to contain_file('define_openvpn.conf').with(
             'ensure'  => 'present',
             'content' => /THIS FILE IS MANAGED BY PUPPET/,
             'notify'  => 'Service[openvpn]',
             'require' => 'Package[openvpn]',
-          })
+          )
         end
       end
 
@@ -68,12 +68,12 @@ describe 'openvpn::define', :type => :define do
         }}
 
         it do
-          is_expected.to contain_file('define_openvpn.conf').with({
+          is_expected.to contain_file('define_openvpn.conf').with(
             'ensure'  => 'present',
             'content' => /THIS FILE IS MANAGED BY PUPPET/,
             'notify'  => 'Service[openvpn]',
             'require' => 'Package[openvpn]',
-          })
+          )
         end
       end
     end
