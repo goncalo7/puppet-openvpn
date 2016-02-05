@@ -19,9 +19,9 @@ describe 'openvpn', :type => :class do
       describe 'openvpn::install' do
         context 'defaults' do
           it do
-            is_expected.to contain_package('openvpn').with({
+            is_expected.to contain_package('openvpn').with(
               'ensure' => 'present',
-            })
+            )
           end
         end
 
@@ -31,9 +31,9 @@ describe 'openvpn', :type => :class do
           }}
 
           it do
-            is_expected.to contain_package('openvpn').with({
+            is_expected.to contain_package('openvpn').with(
               'ensure' => 'latest',
-            })
+            )
           end
         end
 
@@ -45,22 +45,41 @@ describe 'openvpn', :type => :class do
           }}
 
           it do
-            is_expected.to contain_package('openvpn').with({
+            is_expected.to contain_package('openvpn').with(
               'ensure' => 'absent',
-            })
+            )
           end
           it do
-            is_expected.to contain_file('openvpn.conf').with({
+            is_expected.to contain_file('easy-rsa.conf').with(
+              'ensure'  => 'present',
+              'content' => /THIS FILE IS MANAGED BY PUPPET/,
+              'require' => 'Exec[easy-rsa.dir]',
+            )
+          end
+          it do
+            is_expected.to contain_file('/etc/openvpn/download').with(
+              'ensure'  => 'directory',
+              'require' => 'Exec[easy-rsa.dir]',
+            )
+          end
+          it do
+            is_expected.to contain_file('/etc/openvpn/easy-rsa').with(
+              'ensure'  => 'directory',
+              'require' => 'Exec[easy-rsa.dir]',
+            )
+          end
+          it do
+            is_expected.to contain_file('openvpn.conf').with(
               'ensure'  => 'present',
               'notify'  => 'Service[openvpn]',
               'require' => 'Package[openvpn]',
-            })
+            )
           end
           it do
-            is_expected.to contain_service('openvpn').with({
+            is_expected.to contain_service('openvpn').with(
               'ensure' => 'stopped',
               'enable' => false,
-            })
+            )
           end
         end
 
@@ -72,22 +91,41 @@ describe 'openvpn', :type => :class do
           }}
 
           it do
-            is_expected.to contain_package('openvpn').with({
+            is_expected.to contain_package('openvpn').with(
               'ensure' => 'purged',
-            })
+            )
           end
           it do
-            is_expected.to contain_file('openvpn.conf').with({
+            is_expected.to contain_file('easy-rsa.conf').with(
+              'ensure'  => 'absent',
+              'content' => /THIS FILE IS MANAGED BY PUPPET/,
+              'require' => 'Exec[easy-rsa.dir]',
+            )
+          end
+          it do
+            is_expected.to contain_file('/etc/openvpn/download').with(
+              'ensure'  => 'absent',
+              'require' => 'Exec[easy-rsa.dir]',
+            )
+          end
+          it do
+            is_expected.to contain_file('/etc/openvpn/easy-rsa').with(
+              'ensure'  => 'absent',
+              'require' => 'Exec[easy-rsa.dir]',
+            )
+          end
+          it do
+            is_expected.to contain_file('openvpn.conf').with(
               'ensure'  => 'absent',
               'notify'  => 'Service[openvpn]',
               'require' => 'Package[openvpn]',
-            })
+            )
           end
           it do
-            is_expected.to contain_service('openvpn').with({
+            is_expected.to contain_service('openvpn').with(
               'ensure' => 'stopped',
               'enable' => false,
-            })
+            )
           end
         end
       end
@@ -95,11 +133,11 @@ describe 'openvpn', :type => :class do
       describe 'openvpn::config' do
         context 'defaults' do
           it do
-            is_expected.to contain_file('openvpn.conf').with({
+            is_expected.to contain_file('openvpn.conf').with(
               'ensure'  => 'present',
               'notify'  => 'Service[openvpn]',
               'require' => 'Package[openvpn]',
-            })
+            )
           end
         end
 
@@ -109,7 +147,7 @@ describe 'openvpn', :type => :class do
           }}
 
           it do
-            is_expected.to contain_file('openvpn.dir').with({
+            is_expected.to contain_file('openvpn.dir').with(
               'ensure'  => 'directory',
               'force'   => false,
               'purge'   => false,
@@ -117,7 +155,7 @@ describe 'openvpn', :type => :class do
               'source'  => 'puppet:///modules/openvpn/common/etc/openvpn',
               'notify'  => 'Service[openvpn]',
               'require' => 'Package[openvpn]',
-            })
+            )
           end
         end
 
@@ -128,7 +166,7 @@ describe 'openvpn', :type => :class do
           }}
 
           it do
-            is_expected.to contain_file('openvpn.dir').with({
+            is_expected.to contain_file('openvpn.dir').with(
               'ensure'  => 'directory',
               'force'   => true,
               'purge'   => true,
@@ -136,7 +174,7 @@ describe 'openvpn', :type => :class do
               'source'  => 'puppet:///modules/openvpn/common/etc/openvpn',
               'notify'  => 'Service[openvpn]',
               'require' => 'Package[openvpn]',
-            })
+            )
           end
         end
 
@@ -146,12 +184,81 @@ describe 'openvpn', :type => :class do
           }}
 
           it do
-            is_expected.to contain_file('openvpn.conf').with({
+            is_expected.to contain_exec('ca.key').with(
+              'command' => '. ./vars && ./pkitool --initca',
+              'creates' => '/etc/openvpn/easy-rsa/keys/ca.key',
+              'require' => 'Exec[dh1024.pem]',
+            )
+          end
+          it do
+            is_expected.to contain_exec('crl.pem').with(
+              'command' => '. ./vars && KEY_CN=\'\' KEY_NAME=\'\' KEY_OU=\'\' openssl ca -gencrl -out /etc/openvpn/crl.pem -config /etc/openvpn/easy-rsa/openssl.cnf',
+              'creates' => '/etc/openvpn/crl.pem',
+              'require' => 'Exec[server.key]',
+            )
+          end
+          it do
+            is_expected.to contain_exec('dh1024.pem').with(
+              'command' => '. ./vars && ./clean-all && ./build-dh',
+              'creates' => '/etc/openvpn/easy-rsa/keys/dh1024.pem',
+              'require' => 'File[easy-rsa.conf]',
+            )
+          end
+          it do
+            is_expected.to contain_exec('easy-rsa.dir').with(
+              'command' => 'cp -r /usr/share/doc/openvpn/examples/easy-rsa/2.0 /etc/openvpn/easy-rsa',
+              'creates' => '/etc/openvpn/easy-rsa',
+              'require' => 'Package[openvpn]',
+            )
+          end
+          it do
+            is_expected.to contain_exec('server.key').with(
+              'command' => '. ./vars && ./pkitool --server server',
+              'creates' => '/etc/openvpn/easy-rsa/keys/server.key',
+              'require' => 'Exec[ca.key]',
+            )
+          end
+          it do
+            is_expected.to contain_exec('ca.key').with(
+              'command' => '. ./vars && ./pkitool --initca',
+              'creates' => '/etc/openvpn/easy-rsa/keys/ca.key',
+              'require' => 'Exec[dh1024.pem]',
+            )
+          end
+          it do
+            is_expected.to contain_file('easy-rsa.conf').with(
+              'ensure'  => 'present',
+              'content' => /THIS FILE IS MANAGED BY PUPPET/,
+              'require' => 'Exec[easy-rsa.dir]',
+            )
+          end
+          it do
+            is_expected.to contain_file('/etc/openvpn/download').with(
+              'ensure'  => 'directory',
+              'require' => 'Exec[easy-rsa.dir]',
+            )
+          end
+          it do
+            is_expected.to contain_file('/etc/openvpn/easy-rsa').with(
+              'ensure'  => 'directory',
+              'require' => 'Exec[easy-rsa.dir]',
+            )
+          end
+          it do
+            is_expected.to contain_file('openssl.cnf').with(
+              'ensure'  => 'link',
+              'target'  => '/etc/openvpn/easy-rsa/openssl-1.0.0.cnf',
+              'before'  => 'Exec[crl.pem]',
+              'require' => 'Exec[easy-rsa.dir]',
+            )
+          end
+          it do
+            is_expected.to contain_file('openvpn.conf').with(
               'ensure'  => 'present',
               'source'  => 'puppet:///modules/openvpn/common/etc/openvpn/openvpn.conf',
               'notify'  => 'Service[openvpn]',
               'require' => 'Package[openvpn]',
-            })
+            )
           end
         end
 
@@ -161,12 +268,81 @@ describe 'openvpn', :type => :class do
           }}
 
           it do
-            is_expected.to contain_file('openvpn.conf').with({
+            is_expected.to contain_exec('ca.key').with(
+              'command' => '. ./vars && ./pkitool --initca',
+              'creates' => '/etc/openvpn/easy-rsa/keys/ca.key',
+              'require' => 'Exec[dh1024.pem]',
+            )
+          end
+          it do
+            is_expected.to contain_exec('crl.pem').with(
+              'command' => '. ./vars && KEY_CN=\'\' KEY_NAME=\'\' KEY_OU=\'\' openssl ca -gencrl -out /etc/openvpn/crl.pem -config /etc/openvpn/easy-rsa/openssl.cnf',
+              'creates' => '/etc/openvpn/crl.pem',
+              'require' => 'Exec[server.key]',
+            )
+          end
+          it do
+            is_expected.to contain_exec('dh1024.pem').with(
+              'command' => '. ./vars && ./clean-all && ./build-dh',
+              'creates' => '/etc/openvpn/easy-rsa/keys/dh1024.pem',
+              'require' => 'File[easy-rsa.conf]',
+            )
+          end
+          it do
+            is_expected.to contain_exec('easy-rsa.dir').with(
+              'command' => 'cp -r /usr/share/doc/openvpn/examples/easy-rsa/2.0 /etc/openvpn/easy-rsa',
+              'creates' => '/etc/openvpn/easy-rsa',
+              'require' => 'Package[openvpn]',
+            )
+          end
+          it do
+            is_expected.to contain_exec('server.key').with(
+              'command' => '. ./vars && ./pkitool --server server',
+              'creates' => '/etc/openvpn/easy-rsa/keys/server.key',
+              'require' => 'Exec[ca.key]',
+            )
+          end
+          it do
+            is_expected.to contain_exec('ca.key').with(
+              'command' => '. ./vars && ./pkitool --initca',
+              'creates' => '/etc/openvpn/easy-rsa/keys/ca.key',
+              'require' => 'Exec[dh1024.pem]',
+            )
+          end
+          it do
+            is_expected.to contain_file('easy-rsa.conf').with(
+              'ensure'  => 'present',
+              'content' => /THIS FILE IS MANAGED BY PUPPET/,
+              'require' => 'Exec[easy-rsa.dir]',
+            )
+          end
+          it do
+            is_expected.to contain_file('/etc/openvpn/download').with(
+              'ensure'  => 'directory',
+              'require' => 'Exec[easy-rsa.dir]',
+            )
+          end
+          it do
+            is_expected.to contain_file('/etc/openvpn/easy-rsa').with(
+              'ensure'  => 'directory',
+              'require' => 'Exec[easy-rsa.dir]',
+            )
+          end
+          it do
+            is_expected.to contain_file('openssl.cnf').with(
+              'ensure'  => 'link',
+              'target'  => '/etc/openvpn/easy-rsa/openssl-1.0.0.cnf',
+              'before'  => 'Exec[crl.pem]',
+              'require' => 'Exec[easy-rsa.dir]',
+            )
+          end
+          it do
+            is_expected.to contain_file('openvpn.conf').with(
               'ensure'  => 'present',
               'content' => /THIS FILE IS MANAGED BY PUPPET/,
               'notify'  => 'Service[openvpn]',
               'require' => 'Package[openvpn]',
-            })
+            )
           end
         end
 
@@ -176,12 +352,81 @@ describe 'openvpn', :type => :class do
           }}
 
           it do
-            is_expected.to contain_file('openvpn.conf').with({
+            is_expected.to contain_exec('ca.key').with(
+              'command' => '. ./vars && ./pkitool --initca',
+              'creates' => '/etc/openvpn/easy-rsa/keys/ca.key',
+              'require' => 'Exec[dh1024.pem]',
+            )
+          end
+          it do
+            is_expected.to contain_exec('crl.pem').with(
+              'command' => '. ./vars && KEY_CN=\'\' KEY_NAME=\'\' KEY_OU=\'\' openssl ca -gencrl -out /etc/openvpn/crl.pem -config /etc/openvpn/easy-rsa/openssl.cnf',
+              'creates' => '/etc/openvpn/crl.pem',
+              'require' => 'Exec[server.key]',
+            )
+          end
+          it do
+            is_expected.to contain_exec('dh1024.pem').with(
+              'command' => '. ./vars && ./clean-all && ./build-dh',
+              'creates' => '/etc/openvpn/easy-rsa/keys/dh1024.pem',
+              'require' => 'File[easy-rsa.conf]',
+            )
+          end
+          it do
+            is_expected.to contain_exec('easy-rsa.dir').with(
+              'command' => 'cp -r /usr/share/doc/openvpn/examples/easy-rsa/2.0 /etc/openvpn/easy-rsa',
+              'creates' => '/etc/openvpn/easy-rsa',
+              'require' => 'Package[openvpn]',
+            )
+          end
+          it do
+            is_expected.to contain_exec('server.key').with(
+              'command' => '. ./vars && ./pkitool --server server',
+              'creates' => '/etc/openvpn/easy-rsa/keys/server.key',
+              'require' => 'Exec[ca.key]',
+            )
+          end
+          it do
+            is_expected.to contain_exec('ca.key').with(
+              'command' => '. ./vars && ./pkitool --initca',
+              'creates' => '/etc/openvpn/easy-rsa/keys/ca.key',
+              'require' => 'Exec[dh1024.pem]',
+            )
+          end
+          it do
+            is_expected.to contain_file('easy-rsa.conf').with(
+              'ensure'  => 'present',
+              'content' => /THIS FILE IS MANAGED BY PUPPET/,
+              'require' => 'Exec[easy-rsa.dir]',
+            )
+          end
+          it do
+            is_expected.to contain_file('/etc/openvpn/download').with(
+              'ensure'  => 'directory',
+              'require' => 'Exec[easy-rsa.dir]',
+            )
+          end
+          it do
+            is_expected.to contain_file('/etc/openvpn/easy-rsa').with(
+              'ensure'  => 'directory',
+              'require' => 'Exec[easy-rsa.dir]',
+            )
+          end
+          it do
+            is_expected.to contain_file('openssl.cnf').with(
+              'ensure'  => 'link',
+              'target'  => '/etc/openvpn/easy-rsa/openssl-1.0.0.cnf',
+              'before'  => 'Exec[crl.pem]',
+              'require' => 'Exec[easy-rsa.dir]',
+            )
+          end
+          it do
+            is_expected.to contain_file('openvpn.conf').with(
               'ensure'  => 'present',
               'content' => /THIS FILE IS MANAGED BY PUPPET/,
               'notify'  => 'Service[openvpn]',
               'require' => 'Package[openvpn]',
-            })
+            )
           end
         end
 
@@ -194,12 +439,81 @@ describe 'openvpn', :type => :class do
           }}
 
           it do
-            is_expected.to contain_file('openvpn.conf').with({
+            is_expected.to contain_exec('ca.key').with(
+              'command' => '. ./vars && ./pkitool --initca',
+              'creates' => '/etc/openvpn/easy-rsa/keys/ca.key',
+              'require' => 'Exec[dh1024.pem]',
+            )
+          end
+          it do
+            is_expected.to contain_exec('crl.pem').with(
+              'command' => '. ./vars && KEY_CN=\'\' KEY_NAME=\'\' KEY_OU=\'\' openssl ca -gencrl -out /etc/openvpn/crl.pem -config /etc/openvpn/easy-rsa/openssl.cnf',
+              'creates' => '/etc/openvpn/crl.pem',
+              'require' => 'Exec[server.key]',
+            )
+          end
+          it do
+            is_expected.to contain_exec('dh1024.pem').with(
+              'command' => '. ./vars && ./clean-all && ./build-dh',
+              'creates' => '/etc/openvpn/easy-rsa/keys/dh1024.pem',
+              'require' => 'File[easy-rsa.conf]',
+            )
+          end
+          it do
+            is_expected.to contain_exec('easy-rsa.dir').with(
+              'command' => 'cp -r /usr/share/doc/openvpn/examples/easy-rsa/2.0 /etc/openvpn/easy-rsa',
+              'creates' => '/etc/openvpn/easy-rsa',
+              'require' => 'Package[openvpn]',
+            )
+          end
+          it do
+            is_expected.to contain_exec('server.key').with(
+              'command' => '. ./vars && ./pkitool --server server',
+              'creates' => '/etc/openvpn/easy-rsa/keys/server.key',
+              'require' => 'Exec[ca.key]',
+            )
+          end
+          it do
+            is_expected.to contain_exec('ca.key').with(
+              'command' => '. ./vars && ./pkitool --initca',
+              'creates' => '/etc/openvpn/easy-rsa/keys/ca.key',
+              'require' => 'Exec[dh1024.pem]',
+            )
+          end
+          it do
+            is_expected.to contain_file('easy-rsa.conf').with(
+              'ensure'  => 'present',
+              'content' => /THIS FILE IS MANAGED BY PUPPET/,
+              'require' => 'Exec[easy-rsa.dir]',
+            )
+          end
+          it do
+            is_expected.to contain_file('/etc/openvpn/download').with(
+              'ensure'  => 'directory',
+              'require' => 'Exec[easy-rsa.dir]',
+            )
+          end
+          it do
+            is_expected.to contain_file('/etc/openvpn/easy-rsa').with(
+              'ensure'  => 'directory',
+              'require' => 'Exec[easy-rsa.dir]',
+            )
+          end
+          it do
+            is_expected.to contain_file('openssl.cnf').with(
+              'ensure'  => 'link',
+              'target'  => '/etc/openvpn/easy-rsa/openssl-1.0.0.cnf',
+              'before'  => 'Exec[crl.pem]',
+              'require' => 'Exec[easy-rsa.dir]',
+            )
+          end
+          it do
+            is_expected.to contain_file('openvpn.conf').with(
               'ensure'  => 'present',
               'content' => /THIS FILE IS MANAGED BY PUPPET/,
               'notify'  => 'Service[openvpn]',
               'require' => 'Package[openvpn]',
-            })
+            )
           end
         end
       end
@@ -207,10 +521,10 @@ describe 'openvpn', :type => :class do
       describe 'openvpn::service' do
         context 'defaults' do
           it do
-            is_expected.to contain_service('openvpn').with({
+            is_expected.to contain_service('openvpn').with(
               'ensure' => 'running',
               'enable' => true,
-            })
+            )
           end
         end
 
@@ -220,10 +534,10 @@ describe 'openvpn', :type => :class do
           }}
 
           it do
-            is_expected.to contain_service('openvpn').with({
+            is_expected.to contain_service('openvpn').with(
               'ensure' => 'stopped',
               'enable' => true,
-            })
+            )
           end
         end
       end

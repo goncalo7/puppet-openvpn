@@ -27,17 +27,17 @@
 
 # Which local IP address should OpenVPN
 # listen on? (optional)
-local <%= scope.lookupvar('::ipaddress_primary') %>
+local <%= scope['::ipaddress_primary'] %>
 
 # Which TCP/UDP port should OpenVPN listen on?
 # If you want to run multiple OpenVPN instances
 # on the same machine, use a different port
 # number for each one.  You will need to
 # open up this port on your firewall.
-port <%= scope.lookupvar('::openvpn::server_port') %>
+port <%= scope['::openvpn::server_port'] %>
 
 # TCP or UDP server?
-proto <%= scope.lookupvar('::openvpn::server_proto') %>
+proto <%= scope['::openvpn::server_proto'] %>
 
 # "dev tun" will create a routed IP tunnel,
 # "dev tap" will create an ethernet tunnel.
@@ -53,7 +53,7 @@ proto <%= scope.lookupvar('::openvpn::server_proto') %>
 # On most systems, the VPN will not function
 # unless you partially or fully disable
 # the firewall for the TUN/TAP interface.
-dev <%= scope.lookupvar('::openvpn::server_dev') %>
+dev <%= scope['::openvpn::server_dev'] %>
 
 # Windows needs the TAP-Win32 adapter name
 # from the Network Connections panel if you
@@ -78,17 +78,17 @@ dev <%= scope.lookupvar('::openvpn::server_dev') %>
 # Any X509 key management system can be used.
 # OpenVPN can also use a PKCS #12 formatted key file
 # (see "pkcs12" directive in man page).
-ca <%= scope.lookupvar('::openvpn::easy_rsa_dir_path') %>/keys/ca.crt
-cert <%= scope.lookupvar('::openvpn::easy_rsa_dir_path') %>/keys/server.crt
-key <%= scope.lookupvar('::openvpn::easy_rsa_dir_path') %>/keys/server.key
-crl-verify <%= scope.lookupvar('::openvpn::config_dir_path') %>/crl.pem
+ca <%= scope['::openvpn::easy_rsa_dir_path'] %>/keys/ca.crt
+cert <%= scope['::openvpn::easy_rsa_dir_path'] %>/keys/server.crt
+key <%= scope['::openvpn::easy_rsa_dir_path'] %>/keys/server.key
+crl-verify <%= scope['::openvpn::config_dir_path'] %>/crl.pem
 
 # Diffie hellman parameters.
 # Generate your own with:
 #   openssl dhparam -out dh1024.pem 1024
 # Substitute 2048 for 1024 if you are using
 # 2048 bit keys. 
-dh <%= scope.lookupvar('::openvpn::easy_rsa_dir_path') %>/keys/dh<%= scope.lookupvar('::openvpn::key_size') %>.pem
+dh <%= scope['::openvpn::easy_rsa_dir_path'] %>/keys/dh<%= scope['::openvpn::key_size'] %>.pem
 
 # Configure server mode and supply a VPN subnet
 # for OpenVPN to draw client addresses from.
@@ -97,7 +97,7 @@ dh <%= scope.lookupvar('::openvpn::easy_rsa_dir_path') %>/keys/dh<%= scope.looku
 # Each client will be able to reach the server
 # on 10.8.0.1. Comment this line out if you are
 # ethernet bridging. See the man page for more info.
-server <%= scope.lookupvar('::openvpn::server_subnet') %>
+server <%= scope['::openvpn::server_subnet'] %>
 
 # Maintain a record of client <-> virtual IP address
 # associations in this file.  If OpenVPN goes down or
@@ -137,8 +137,8 @@ ifconfig-pool-persist ipp.txt
 # to know to route the OpenVPN client
 # address pool (10.8.0.0/255.255.255.0)
 # back to the OpenVPN server.
-<% unless [:undef, nil].include? scope.lookupvar('::openvpn::server_push') -%>
-<% scope.lookupvar('::openvpn::server_push').each do |value| -%>
+<% unless [:undef, nil].include? scope['::openvpn::server_push'] -%>
+<% scope['::openvpn::server_push'].each do |value| -%>
 push "<%= value %>"
 <% end -%>
 <% else -%>
@@ -257,7 +257,7 @@ keepalive 10 120
 # Enable compression on the VPN link.
 # If you enable it here, you must also
 # enable it in the client config file.
-<% if scope.lookupvar('::openvpn::server_compression') -%>
+<% if scope['::openvpn::server_compression'] -%>
 comp-lzo
 <% else -%>
 ;comp-lzo
@@ -272,12 +272,12 @@ comp-lzo
 #
 # You can uncomment this out on
 # non-Windows systems.
-<% if scope.lookupvar('::openvpn::server_user') -%>
+<% if scope['::openvpn::server_user'] -%>
 user nobody
 <% else -%>
 ;user nobody
 <% end -%>
-<% if scope.lookupvar('::openvpn::server_group') -%>
+<% if scope['::openvpn::server_group'] -%>
 group nogroup
 <% else -%>
 ;group nogroup

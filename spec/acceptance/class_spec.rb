@@ -3,7 +3,6 @@ require 'spec_helper_acceptance'
 case fact('osfamily')
 when 'Debian'
   package_name     = 'openvpn'
-  config_dir_path  = '/etc/openvpn'
   config_file_path = '/etc/openvpn/openvpn.conf'
   service_name     = 'openvpn'
 end
