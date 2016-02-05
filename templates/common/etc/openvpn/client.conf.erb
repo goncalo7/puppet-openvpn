@@ -25,7 +25,7 @@ client
 # On most systems, the VPN will not function
 # unless you partially or fully disable
 # the firewall for the TUN/TAP interface.
-dev <%= scope.lookupvar('::openvpn::server_dev') %>
+dev <%= scope['::openvpn::server_dev'] %>
 
 # Windows needs the TAP-Win32 adapter name
 # from the Network Connections panel
@@ -37,12 +37,12 @@ dev <%= scope.lookupvar('::openvpn::server_dev') %>
 # Are we connecting to a TCP or
 # UDP server?  Use the same setting as
 # on the server.
-proto <%= scope.lookupvar('::openvpn::server_proto') %>
+proto <%= scope['::openvpn::server_proto'] %>
 
 # The hostname/IP and port of the server.
 # You can have multiple remote entries
 # to load balance between the servers.
-remote <%= scope.lookupvar('::ipaddress_primary') %> 1194
+remote <%= scope['::ipaddress_primary'] %> 1194
 
 # Choose a random host from the remote
 # list for load-balancing.  Otherwise
@@ -60,12 +60,12 @@ resolv-retry infinite
 nobind
 
 # Downgrade privileges after initialization (non-Windows only)
-<% if scope.lookupvar('::openvpn::server_user') -%>
+<% if scope['::openvpn::server_user'] -%>
 user nobody
 <% else -%>
 ;user nobody
 <% end -%>
-<% if scope.lookupvar('::openvpn::server_group') -%>
+<% if scope['::openvpn::server_group'] -%>
 group nogroup
 <% else -%>
 ;group nogroup
@@ -128,7 +128,7 @@ ns-cert-type server
 # Enable compression on the VPN link.
 # Don't enable this unless it is also
 # enabled in the server config file.
-<% if scope.lookupvar('::openvpn::server_compression') -%>
+<% if scope['::openvpn::server_compression'] -%>
 comp-lzo
 <% else -%>
 ;comp-lzo
