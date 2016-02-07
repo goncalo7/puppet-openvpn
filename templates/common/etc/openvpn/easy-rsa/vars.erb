@@ -17,7 +17,7 @@
 # This variable should point to
 # the top level of the easy-rsa
 # tree.
-export EASY_RSA="<%= scope.lookupvar('::openvpn::easy_rsa_dir_path') %>"
+export EASY_RSA="<%= scope['::openvpn::easy_rsa_dir_path'] %>"
 
 #
 # This variable should point to
@@ -55,51 +55,51 @@ export PKCS11_PIN="dummy"
 # down TLS negotiation performance
 # as well as the one-time DH parms
 # generation process.
-export KEY_SIZE=<%= scope.lookupvar('::openvpn::key_size') %>
+export KEY_SIZE=<%= scope['::openvpn::key_size'] %>
 
 # In how many days should the root CA key expire?
-export CA_EXPIRE=<%= scope.lookupvar('::openvpn::ca_expire') %>
+export CA_EXPIRE=<%= scope['::openvpn::ca_expire'] %>
 
 # In how many days should certificates expire?
-export KEY_EXPIRE=<%= scope.lookupvar('::openvpn::key_expire') %>
+export KEY_EXPIRE=<%= scope['::openvpn::key_expire'] %>
 
 # These are the default values for fields
 # which will be placed in the certificate.
 # Don't leave any of these fields blank.
-export KEY_COUNTRY="<%= scope.lookupvar('::openvpn::key_country') %>"
-export KEY_PROVINCE="<%= scope.lookupvar('::openvpn::key_province') %>"
-export KEY_CITY="<%= scope.lookupvar('::openvpn::key_city') %>"
-export KEY_ORG="<%= scope.lookupvar('::openvpn::key_organization') %>"
-export KEY_EMAIL="<%= scope.lookupvar('::openvpn::key_email') %>"
+export KEY_COUNTRY="<%= scope['::openvpn::key_country'] %>"
+export KEY_PROVINCE="<%= scope['::openvpn::key_province'] %>"
+export KEY_CITY="<%= scope['::openvpn::key_city'] %>"
+export KEY_ORG="<%= scope['::openvpn::key_organization'] %>"
+export KEY_EMAIL="<%= scope['::openvpn::key_email'] %>"
 <% if @lsbdistcodename =~ /(wheezy|precise)/ -%>
-export KEY_EMAIL=<%= scope.lookupvar('::openvpn::key_email') %>
-<% if scope.lookupvar('::openvpn::key_cn') != '' -%>
-export KEY_CN="<%= scope.lookupvar('::openvpn::key_cn') %>"
+export KEY_EMAIL=<%= scope['::openvpn::key_email'] %>
+<% if scope['::openvpn::key_cn'] != '' -%>
+export KEY_CN="<%= scope['::openvpn::key_cn'] %>"
 <% else -%>
 # export KEY_CN="changeme"
 <% end -%>
-<% if scope.lookupvar('::openvpn::key_name') != '' -%>
-export KEY_NAME="<%= scope.lookupvar('::openvpn::key_name') %>"
+<% if scope['::openvpn::key_name'] != '' -%>
+export KEY_NAME="<%= scope['::openvpn::key_name'] %>"
 <% else -%>
 # export KEY_NAME="changeme"
 <% end -%>
-<% if scope.lookupvar('::openvpn::key_ou') != '' -%>
-export KEY_OU="<%= scope.lookupvar('::openvpn::key_ou') %>"
+<% if scope['::openvpn::key_ou'] != '' -%>
+export KEY_OU="<%= scope['::openvpn::key_ou'] %>"
 <% else -%>
 # export KEY_OU="changeme"
 <% end -%>
 # export PKCS11_MODULE_PATH=changeme
 # export PKCS11_PIN=1234
 <% elsif @lsbdistcodename =~ /(jessie|trusty)/ -%>
-<% if scope.lookupvar('::openvpn::key_ou') != '' -%>
-export KEY_OU="<%= scope.lookupvar('::openvpn::key_ou') %>"
+<% if scope['::openvpn::key_ou'] != '' -%>
+export KEY_OU="<%= scope['::openvpn::key_ou'] %>"
 <% else -%>
 # export KEY_OU="MyOrganizationalUnit"
 <% end -%>
 
 # X509 Subject Field
-<% if scope.lookupvar('::openvpn::key_name') != '' -%>
-export KEY_NAME="<%= scope.lookupvar('::openvpn::key_name') %>"
+<% if scope['::openvpn::key_name'] != '' -%>
+export KEY_NAME="<%= scope['::openvpn::key_name'] %>"
 <% else -%>
 # export KEY_NAME="EasyRSA"
 <% end -%>
@@ -110,8 +110,8 @@ export KEY_NAME="<%= scope.lookupvar('::openvpn::key_name') %>"
 
 # If you'd like to sign all keys with the same Common Name, uncomment the KEY_CN export below
 # You will also need to make sure your OpenVPN server config has the duplicate-cn option set
-<% if scope.lookupvar('::openvpn::key_cn') != '' -%>
-export KEY_CN="<%= scope.lookupvar('::openvpn::key_cn') %>"
+<% if scope['::openvpn::key_cn'] != '' -%>
+export KEY_CN="<%= scope['::openvpn::key_cn'] %>"
 <% else -%>
 # export KEY_CN="CommonName"
 <% end -%>

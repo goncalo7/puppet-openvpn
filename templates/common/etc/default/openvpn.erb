@@ -9,14 +9,14 @@
 # Start only these VPNs automatically via init script.
 # Allowed values are "all", "none" or space separated list of
 # names of the VPNs. If empty, "all" is assumed.
-<% if scope.lookupvar('::lsbdistcodename') != 'squeeze' -%>
+<% if scope['::lsbdistcodename'] != 'squeeze' -%>
 # The VPN name refers to the VPN configutation file name.
 # i.e. "home" would be /etc/openvpn/home.conf
 <% end -%>
 #
 #AUTOSTART="all"
 #AUTOSTART="none"
-AUTOSTART="<%= scope.lookupvar('::openvpn::service_name') %>"
+AUTOSTART="<%= scope['::openvpn::service_name'] %>"
 #
 # Refresh interval (in seconds) of default status files
 # located in /var/run/openvpn.$NAME.status
@@ -26,7 +26,7 @@ AUTOSTART="<%= scope.lookupvar('::openvpn::service_name') %>"
 #STATUSREFRESH=0
 # Optional arguments to openvpn's command line
 OPTARGS=""
-<% if scope.lookupvar('::lsbdistcodename') != 'squeeze' -%>
+<% if scope['::lsbdistcodename'] != 'squeeze' -%>
 #
 # If you need openvpn running after sendsigs, i.e.
 # to let umountnfs work over the vpn, set OMIT_SENDSIGS
