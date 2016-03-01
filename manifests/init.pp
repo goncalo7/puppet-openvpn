@@ -44,6 +44,18 @@ class openvpn (
   $key_name                 = '',
   $key_ou                   = '',
 
+  #Quby added options -----------------------------
+  $client_disconnect        = '',
+  $client_connect           = '',
+  $script_security          = '',
+  $txqueuelen               = '',
+  $ping                     = '',
+  $ping_exit                = '',
+  $plugin                   = '',
+  $management               = '',
+  $max_clients              = '',
+
+
   $clients_hash             = {},
 
   $server_port              = 1194,

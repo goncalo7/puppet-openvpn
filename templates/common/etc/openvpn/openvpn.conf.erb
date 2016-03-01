@@ -263,9 +263,6 @@ comp-lzo
 ;comp-lzo
 <% end -%>
 
-# The maximum number of concurrently connected
-# clients we want to allow.
-;max-clients 100
 
 # It's a good idea to reduce the OpenVPN
 # daemon's privileges after initialization.
@@ -282,7 +279,6 @@ group nogroup
 <% else -%>
 ;group nogroup
 <% end -%>
-
 # The persist options will try to avoid
 # accessing certain resources on restart
 # that may no longer be accessible because
@@ -318,3 +314,53 @@ verb 3
 # sequential messages of the same message
 # category will be output to the log.
 ;mute 20
+
+# txqueuelen
+<% if scope['::openvpn::txqueuelen'] -%>
+txqueuelen <%= scope['::openvpn::txqueuelen'] %>
+<% end -%>
+
+
+#script-security
+<% if scope['::openvpn::script_security'] -%>
+script-security <%= scope['::openvpn::script_security'] %>
+<% end -%>
+
+#client-connect
+<% if scope['::openvpn::client_connect'] -%>
+client-connect <%= scope['::openvpn::client_connect'] %>
+<% end -%>
+
+#client-disconnect
+<% if scope['::openvpn::client_disconnect'] -%>
+client-disconnect <%= scope['::openvpn::client_disconnect'] %>
+<% end -%>
+
+#ping
+<% if scope['::openvpn::ping'] -%>
+ping <%= scope['::openvpn::ping'] %>
+<% end -%>
+
+#ping-exit
+<% if scope['::openvpn::ping_exit'] -%>
+ping-exit <%= scope['::openvpn::ping_exit'] %>
+<% end -%>
+
+#plugin
+<% if scope['::openvpn::plugin'] -%>
+plugin <%= scope['::openvpn::plugin'] %>
+<% end -%>
+
+#management
+<% if scope['::openvpn::management'] -%>
+management <%= scope['::openvpn::management'] %>
+<% end -%>
+
+# The maximum number of concurrently connected
+# clients we want to allow.
+<% if scope['::openvpn::max_clients'] -%>
+max-clients <%= scope['::openvpn::max_clients'] %>
+<% else -%>
+;max-clients 100
+<% end -%>
+
