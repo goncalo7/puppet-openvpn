@@ -1,0 +1,60 @@
+local <%= scope['::ipaddress_primary'] %>
+port <%= scope['::openvpn::server_port'] %>
+proto <%= scope['::openvpn::server_proto'] %>
+dev <%= scope['::openvpn::server_dev'] %>
+ca <%= scope['::openvpn::easy_rsa_dir_path'] %>/keys/ca.crt
+cert <%= scope['::openvpn::easy_rsa_dir_path'] %>/keys/server.crt
+key <%= scope['::openvpn::easy_rsa_dir_path'] %>/keys/server.key
+crl-verify <%= scope['::openvpn::config_dir_path'] %>/crl.pem
+dh <%= scope['::openvpn::easy_rsa_dir_path'] %>/keys/dh<%= scope['::openvpn::key_size'] %>.pem
+server <%= scope['::openvpn::server_subnet'] %>
+ifconfig-pool-persist ipp.txt
+<% unless [:undef, nil].include? scope['::openvpn::server_push'] -%>
+<% scope['::openvpn::server_push'].each do |value| -%>
+push "<%= value %>"
+<% end -%>
+<% else -%>
+<% end -%>
+<% if scope['::openvpn::server_user'] -%>
+user nobody
+<% else -%>
+;user nobody
+<% end -%>
+<% if scope['::openvpn::server_group'] -%>
+group nogroup
+<% else -%>
+;group nogroup
+<% end -%>
+persist-key
+persist-tun
+status openvpn-status.log
+verb 3
+<% if scope['::openvpn::txqueuelen'] -%>
+txqueuelen <%= scope['::openvpn::txqueuelen'] %>
+<% end -%>
+<% if scope['::openvpn::script_security'] -%>
+script-security <%= scope['::openvpn::script_security'] %>
+<% end -%>
+<% if scope['::openvpn::client_connect'] -%>
+client-connect <%= scope['::openvpn::client_connect'] %>
+<% end -%>
+<% if scope['::openvpn::client_disconnect'] -%>
+client-disconnect <%= scope['::openvpn::client_disconnect'] %>
+<% end -%>
+<% if scope['::openvpn::ping'] -%>
+ping <%= scope['::openvpn::ping'] %>
+<% end -%>
+<% if scope['::openvpn::ping_exit'] -%>
+ping-exit <%= scope['::openvpn::ping_exit'] %>
+<% end -%>
+<% if scope['::openvpn::plugin'] -%>
+plugin <%= scope['::openvpn::plugin'] %>
+<% end -%>
+<% if scope['::openvpn::management'] -%>
+management <%= scope['::openvpn::management'] %>
+<% end -%>
+<% if scope['::openvpn::max_clients'] -%>
+max-clients <%= scope['::openvpn::max_clients'] %>
+<% else -%>
+;max-clients 100
+<% end -%>
