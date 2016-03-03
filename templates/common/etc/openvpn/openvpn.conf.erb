@@ -81,7 +81,7 @@ dev <%= scope['::openvpn::server_dev'] %>
 ca <%= scope['::openvpn::easy_rsa_dir_path'] %>/keys/ca.crt
 cert <%= scope['::openvpn::easy_rsa_dir_path'] %>/keys/server.crt
 key <%= scope['::openvpn::easy_rsa_dir_path'] %>/keys/server.key
-crl-verify <%= scope['::openvpn::config_dir_path'] %>/crl.pem
+crl-verify <%= scope['::openvpn::config_dir_path'] %>/keys/crl.pem
 
 # Diffie hellman parameters.
 # Generate your own with:

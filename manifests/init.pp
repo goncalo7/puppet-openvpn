@@ -14,6 +14,7 @@ class openvpn (
   $config_file_owner        = $::openvpn::params::config_file_owner,
   $config_file_group        = $::openvpn::params::config_file_group,
   $config_file_mode         = $::openvpn::params::config_file_mode,
+
   $config_file_source       = undef,
   $config_file_string       = undef,
   $config_file_template     = undef,
@@ -43,8 +44,8 @@ class openvpn (
   $key_cn                   = '',
   $key_name                 = '',
   $key_ou                   = '',
-
-  #Quby added options -----------------------------
+  
+  #Quby options -----------------------------
   $client_disconnect        = '',
   $client_connect           = '',
   $script_security          = '',
@@ -54,7 +55,8 @@ class openvpn (
   $plugin                   = '',
   $management               = '',
   $max_clients              = '',
-
+  #Quby options -----------------------------
+  
 
   $clients_hash             = {},
 

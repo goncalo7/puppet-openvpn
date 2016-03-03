@@ -3,9 +3,9 @@ port <%= scope['::openvpn::server_port'] %>
 proto <%= scope['::openvpn::server_proto'] %>
 dev <%= scope['::openvpn::server_dev'] %>
 ca <%= scope['::openvpn::easy_rsa_dir_path'] %>/keys/ca.crt
-cert <%= scope['::openvpn::easy_rsa_dir_path'] %>/keys/server.crt
-key <%= scope['::openvpn::easy_rsa_dir_path'] %>/keys/server.key
-crl-verify <%= scope['::openvpn::config_dir_path'] %>/crl.pem
+cert <%= scope['::openvpn::easy_rsa_dir_path'] %>/keys/VPN-Eneco.crt
+key <%= scope['::openvpn::easy_rsa_dir_path'] %>/keys/VPN-Eneco.key
+crl-verify <%= scope['::openvpn::config_dir_path'] %>/keys/crl.pem
 dh <%= scope['::openvpn::easy_rsa_dir_path'] %>/keys/dh<%= scope['::openvpn::key_size'] %>.pem
 server <%= scope['::openvpn::server_subnet'] %>
 ifconfig-pool-persist ipp.txt
@@ -49,6 +49,7 @@ ping-exit <%= scope['::openvpn::ping_exit'] %>
 <% end -%>
 <% if scope['::openvpn::plugin'] -%>
 plugin <%= scope['::openvpn::plugin'] %>
+<% else -%>
 <% end -%>
 <% if scope['::openvpn::management'] -%>
 management <%= scope['::openvpn::management'] %>
